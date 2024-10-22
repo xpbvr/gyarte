@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Article Uploader</title>
+</head>
+<body>
+    <h1>Write an Article</h1>
+    <form id="articleForm">
+        <input type="text" id="title" placeholder="Article Title" required /><br /><br />
+        <textarea id="content" placeholder="Write your article here..." rows="10"></textarea><br /><br />
+        <button type="submit">Post Article</button>
+    </form>
+
+    <script>
+        const form = document.getElementById('articleForm');
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const title = document.getElementById('title').value;
+            const content = document.getElementById('content').value;
+
+            // Send the data to the Express server
+            const response = await fetch('http://localhost:3000/upload', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ title, content })
+            });
+
+            const result = await response.json();
+            if (result.success) {
+                alert('Article uploaded successfully!');
+                form.reset();
+            } else {
+                alert('Error uploading article: ' + result.error);
+            }
+        });
+    </script>
+</body>
+</html>
