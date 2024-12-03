@@ -1,21 +1,19 @@
 {
-  "name": "article-uploader",
+  "name": "article-app",
   "version": "1.0.0",
   "description": "",
-  "main": "main.js",
+  "main": "index.js",
   "scripts": {
-    "start": "electron ."
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "devDependencies": {
-    "electron": "^33.0.2"
-  },
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "body-parser": "^1.20.3",
     "express": "^4.21.1",
-    "mariadb": "^3.3.2",
-    "sequelize": "^6.37.4"
+    "express-session": "^1.18.1",
+    "sqlite3": "^5.1.7"
   }
 }

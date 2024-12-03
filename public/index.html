@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Article Hub</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Welcome to Article Hub</h1>
+    <nav>
+      <a href="login.html">Login</a>
+      <a href="dashboard.html">Author Dashboard</a>
+    </nav>
+  </header>
+  <main>
+    <h2>Articles</h2>
+    <div id="articles">
+      <!-- Articles will be loaded here -->
+    </div>
+  </main>
+  <script>
+    fetch('/articles')
+      .then(response => response.json())
+      .then(data => {
+        const articlesDiv = document.getElementById('articles');
+        data.forEach(article => {
+          const articleElem = document.createElement('div');
+          articleElem.innerHTML = `
+            <h3>${article.title}</h3>
+            <p>${article.content}</p>
+          `;
+          articlesDiv.appendChild(articleElem);
+        });
+      });
+  </script>
+</body>
+</html>
