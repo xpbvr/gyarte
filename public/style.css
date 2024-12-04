@@ -1,63 +1,111 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+:root {
+  --accent: #5EFF64;
+  --secondary: #ECECEC;
+  --bg-1: #1C1C1C;
+  --bg-2: #2D2D2D;
+  --g-1: #CCCCCC;
+  --g-2: #9E9E9E;
+}
+* {
+  font-family: "Inter", serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  line-height: 1.5;
+  color: var(--secondary);
+}
 body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    margin: 0;
-    padding: 0;
-    background: #f4f4f4;
-  }
-  
-  header {
-    background: #333;
-    color: #fff;
-    padding: 1rem;
-    text-align: center;
-  }
-  
-  header nav a {
-    color: #fff;
-    margin: 0 10px;
-    text-decoration: none;
-  }
-  
-  header nav a:hover {
-    text-decoration: underline;
-  }
-  
-  main {
-    padding: 2rem;
-  }
-  
-  form {
-    max-width: 500px;
-    margin: auto;
-    background: #fff;
-    padding: 1rem;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  form label {
-    display: block;
-    margin: 10px 0 5px;
-  }
-  
-  form input, form textarea {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  form button {
-    background: #333;
-    color: #fff;
-    border: none;
-    padding: 10px 15px;
-    cursor: pointer;
-  }
-  
-  form button:hover {
-    background: #555;
-  }
-  
+  background-color: var(--bg-1);
+}
+header {
+  background:  var(--bg-2);
+  color: #fff;
+  padding: 1rem;
+  text-align: center;
+}
+#articles {
+  display: flex;
+  gap: 1em;
+}
+#articles div {
+  background: var(--bg-2);
+  padding: 1em;
+  border-radius: 5px;
+}
+#articles div h3 a {
+  text-decoration: none;
+}
+header nav a {
+  color: #fff;
+  margin: 0 10px;
+  text-decoration: none;
+}
+
+header nav a:hover {
+  text-decoration: underline;
+}
+
+main {
+  padding: 2rem;
+}
+
+form {
+  max-width: 500px;
+  margin: auto;
+  background: #272727;
+  color: var(--secondary);
+  padding: 1rem;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+form label {
+  display: block;
+  margin: 10px 0 5px;
+}
+
+form input, form textarea, #createContent {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid var(--g-2);
+  border-radius: 5px;
+  background: var(--bg-1);
+  color: var(--secondary);
+}
+
+#articleContent {
+  background: var(--bg-2);
+  padding: 1em;
+  border-radius: 5px;
+}
+
+li {
+  margin-left: 1em;
+}
+
+button {
+  background: #181818;
+  border-radius: 5px;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+button:hover {
+  opacity: 0.7;
+}
+
+form button:hover {
+  background: #555;
+}
+
+#content {
+  border: 1px solid #ccc;
+  padding: 10px;
+  min-height: 200px;
+  background-color: #fff;
+  margin-top: 10px;
+}

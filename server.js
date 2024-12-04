@@ -2,26 +2,26 @@ const express = require('express');
 const session = require('express-session');
 const bodyParser = require('body-parser');
 const path = require('path');
-const authRoutes = require('./routes/auth'); // Ensure this is a proper module
-const articleRoutes = require('./routes/articles'); // Ensure this is a proper module
+const db = require('./models/db');
+const articlesRouter = require('./routes/articles');
+const authRouter = require('./routes/auth');
 
 const app = express();
 
-// Middleware
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(session({
+  secret: 'secret',
+  resave: false,
+  saveUninitialized: true,
+}));
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(
-  session({
-    secret: 'my-secret-key',
-    resave: false,
-    saveUninitialized: true,
-  })
-);
 
-// Routes
-app.use('/auth', authRoutes); // Ensure authRoutes is a Router instance
-app.use('/articles', articleRoutes); // Ensure articleRoutes is a Router instance
+app.use('/articles', articlesRouter);
+app.use('/auth', authRouter);
 
-// Start Server
-const PORT = 3000;
-app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+app.listen(3000, () => {
+  console.log('Server running on http://localhost:3000');
+});

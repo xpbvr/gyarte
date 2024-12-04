@@ -8,32 +8,53 @@
 </head>
 <body>
   <header>
-    <h1>Welcome to Article Hub</h1>
-    <nav>
-      <a href="login.html">Login</a>
-      <a href="dashboard.html">Author Dashboard</a>
-    </nav>
+    <h1>AI & Webbutveckling</h1>
   </header>
   <main>
-    <h2>Articles</h2>
-    <div id="articles">
-      <!-- Articles will be loaded here -->
+    <h2>Artiklar</h2>
+    <div id="articles"></div>
+    <div id="articleContent" style="display: none;">
+      <h2 id="articleTitle"></h2>
+      <p id="articleContentText"></p>
+      <button id="backButton">Tillbaka</button>
     </div>
   </main>
   <script>
-    fetch('/articles')
-      .then(response => response.json())
-      .then(data => {
-        const articlesDiv = document.getElementById('articles');
-        data.forEach(article => {
-          const articleElem = document.createElement('div');
-          articleElem.innerHTML = `
-            <h3>${article.title}</h3>
-            <p>${article.content}</p>
-          `;
-          articlesDiv.appendChild(articleElem);
+    let articlesDiv = document.getElementById('articles');
+    let articleContentDiv = document.getElementById('articleContent');
+    let backButton = document.getElementById('backButton');
+
+    document.addEventListener("DOMContentLoaded", () => {
+      fetch('/articles')
+        .then(response => response.json())
+        .then(data => {
+          data.forEach(article => {
+            const articleElem = document.createElement('div');
+            articleElem.innerHTML = `<h3><a href="#" onclick="loadArticle(${article.id})">${article.title}</a></h3>`;
+            articlesDiv.appendChild(articleElem);
+          });
         });
-      });
+    });
+
+    function loadArticle(id) {
+      fetch(`/articles/${id}`)
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById('articleTitle').textContent = data.title;
+          document.getElementById('articleContentText').innerHTML = data.content;
+          articlesDiv.style.display = 'none';
+          articleContentDiv.style.display = 'block';
+        })
+        .catch(err => {
+          console.error('Error fetching article:', err);
+          alert('Error loading article.');
+        });
+    }
+
+    backButton.addEventListener('click', () => {
+      articlesDiv.style.display = 'flex';
+      articleContentDiv.style.display = 'none';
+    });
   </script>
 </body>
 </html>

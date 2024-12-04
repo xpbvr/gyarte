@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Article</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Article</h1>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/dashboard.html">Author Dashboard</a>
+    </nav>
+  </header>
+  <main>
+    <div id="articleContent">
+      <h2 id="articleTitle"></h2>
+      <p id="articleContentText"></p>
+      <button onclick="window.history.back()">Back to Articles</button>
+    </div>
+  </main>
+  <script>
+    const articleId = window.location.pathname.split('/').pop();
+
+    fetch(`/articles/${articleId}`)
+      .then(response => response.json())
+      .then(data => {
+        const title = document.getElementById('articleTitle');
+        const content = document.getElementById('articleContentText');
+        
+        title.textContent = data.title;
+        content.textContent = data.content;
+      })
+      .catch(err => {
+        console.error('Error fetching article:', err);
+        alert('Error loading article.');
+      });
+  </script>
+</body>
+</html>
