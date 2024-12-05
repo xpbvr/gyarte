@@ -99,7 +99,7 @@
         .then(data => {
           document.getElementById('articleId').value = data.id;
           document.getElementById('editTitle').value = data.title;
-          document.getElementById('editContent').innerHTML = data.content;
+          document.getElementById('editContent').textContent = data.content;
           articlesDiv.style.display = 'none';
           editArticleForm.style.display = 'block';
         })

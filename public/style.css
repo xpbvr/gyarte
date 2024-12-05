@@ -43,7 +43,7 @@ header nav a {
 }
 
 header nav a:hover {
-  text-decoration: underline;
+  opacity: 0.7;
 }
 
 main {
@@ -51,7 +51,7 @@ main {
 }
 
 form {
-  max-width: 500px;
+  max-width: 100%;
   margin: auto;
   background: #272727;
   color: var(--secondary);
@@ -79,6 +79,11 @@ form input, form textarea, #createContent {
   background: var(--bg-2);
   padding: 1em;
   border-radius: 5px;
+  width: 100%;
+}
+#articleContentText {
+  width: 100%;
+  height: 100%;
 }
 
 li {
