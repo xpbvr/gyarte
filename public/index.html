@@ -9,6 +9,9 @@
 <body>
   <header>
     <h1>AI & Webbutveckling</h1>
+    <nav>
+      <a class="logga" href="/login.html">Logga in</a>
+    </nav>
   </header>
   <main>
     <h2>Artiklar</h2>
@@ -20,22 +23,22 @@
     </div>
   </main>
   <script>
-    let articlesDiv = document.getElementById('articles');
-    let articleContentDiv = document.getElementById('articleContent');
-    let backButton = document.getElementById('backButton');
+    let articlesDiv = document.getElementById('articles'); // anropar och lägger till elementet "articlesDiv" som en funktion av diven "articles"
+    let articleContentDiv = document.getElementById('articleContent'); // Samma som ovan bara med en annan div
+    let backButton = document.getElementById('backButton'); // anropar en knapp som JS funktion vid namn "backButton"
 
     document.addEventListener("DOMContentLoaded", () => {
-      fetch('/articles')
+      fetch('/articles') // hämtar artiklarna från databasen
         .then(response => response.json())
         .then(data => {
           data.forEach(article => {
-            const articleElem = document.createElement('div');
+            const articleElem = document.createElement('div'); // Lägger till ett element som har datan från databasen
             articleElem.innerHTML = `<h3><a href="#" onclick="loadArticle(${article.id})">${article.title}</a></h3>`;
             articlesDiv.appendChild(articleElem);
           });
         });
     });
-
+    // Laddar artiklarna och lägger till de som ett HTML element
     function loadArticle(id) {
       fetch(`/articles/${id}`)
         .then(response => response.json())
@@ -50,7 +53,7 @@
           alert('Error loading article.');
         });
     }
-
+    // Lägger till en knapp per artikel som gör att det går att gå tillbaka till hur sidan ser ut när man först laddar upp den.
     backButton.addEventListener('click', () => {
       articlesDiv.style.display = 'flex';
       articleContentDiv.style.display = 'none';
