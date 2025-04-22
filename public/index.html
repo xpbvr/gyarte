@@ -23,28 +23,34 @@
     </div>
   </main>
   <script>
-    let articlesDiv = document.getElementById('articles'); // anropar och lägger till elementet "articlesDiv" som en funktion av diven "articles"
-    let articleContentDiv = document.getElementById('articleContent'); // Samma som ovan bara med en annan div
-    let backButton = document.getElementById('backButton'); // anropar en knapp som JS funktion vid namn "backButton"
-
+    let articlesDiv = document.getElementById('articles'); // references the articles div
+    let articleContentDiv = document.getElementById('articleContent'); // references the article content div
+    let backButton = document.getElementById('backButton'); // references the back button
+  
+    // Load all articles when the page is ready
     document.addEventListener("DOMContentLoaded", () => {
-      fetch('/articles') // hämtar artiklarna från databasen
+      fetch('/articles')
         .then(response => response.json())
         .then(data => {
           data.forEach(article => {
-            const articleElem = document.createElement('div'); // Lägger till ett element som har datan från databasen
+            const articleElem = document.createElement('div');
             articleElem.innerHTML = `<h3><a href="#" onclick="loadArticle(${article.id})">${article.title}</a></h3>`;
             articlesDiv.appendChild(articleElem);
           });
         });
     });
-    // Laddar artiklarna och lägger till de som ett HTML element
+  
+    // Load a specific article and generate the Table of Contents (TOC)
     function loadArticle(id) {
       fetch(`/articles/${id}`)
         .then(response => response.json())
         .then(data => {
           document.getElementById('articleTitle').textContent = data.title;
           document.getElementById('articleContentText').innerHTML = data.content;
+          
+          // Generate the Table of Contents (TOC)
+          generateTOC();
+          
           articlesDiv.style.display = 'none';
           articleContentDiv.style.display = 'block';
         })
@@ -53,11 +59,38 @@
           alert('Error loading article.');
         });
     }
-    // Lägger till en knapp per artikel som gör att det går att gå tillbaka till hur sidan ser ut när man först laddar upp den.
+  
+    // Generate a Table of Contents (TOC) from the article content
+    function generateTOC() {
+      const contentDiv = document.getElementById('articleContentText');
+      const existingTOC = document.getElementById('toc');
+      if (existingTOC) existingTOC.remove(); // Remove any existing TOC to avoid duplication
+  
+      const tocDiv = document.createElement('div');
+      tocDiv.id = 'toc';
+      tocDiv.innerHTML = '<h2>Table of Contents</h2>';
+      contentDiv.prepend(tocDiv); // Add the TOC at the top
+  
+      const headings = contentDiv.querySelectorAll('h1');
+      headings.forEach((heading, index) => {
+        const headingId = heading.id || `heading-${index + 1}`;
+        heading.id = headingId; // Assign an ID if it doesn't exist
+  
+        const tocLink = document.createElement('a');
+        tocLink.href = `#${headingId}`;
+        tocLink.textContent = heading.textContent;
+        tocLink.style.display = 'block';
+        tocLink.style.marginBottom = '5px';
+  
+        tocDiv.appendChild(tocLink);
+      });
+    }
+  
+    // Go back to the articles list
     backButton.addEventListener('click', () => {
       articlesDiv.style.display = 'flex';
       articleContentDiv.style.display = 'none';
     });
-  </script>
+  </script>  
 </body>
 </html>

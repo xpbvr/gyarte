@@ -24,6 +24,7 @@
         <button type="button" onclick="document.execCommand('underline')">Underline</button>
         <button type="button" onclick="document.execCommand('insertUnorderedList')">Unordered List</button>
         <button type="button" onclick="document.execCommand('insertOrderedList')">Ordered List</button>
+        <button type="button" onclick="addHeadingWithId()">Header</button>
       </div>
       <div contenteditable="true" id="createContent" name="content" placeholder="Write your article content here" required></div>
       <button type="submit">Create Article</button>
@@ -183,6 +184,30 @@
         alert("Error creating article.");
       });
     });
+
+    function addHeadingWithId() {
+    const headingId = 'heading-' + Date.now(); // Unique ID
+    const headingHtml = `<h1 id="${headingId}">New Heading</h1>`;
+    document.execCommand('insertHTML', false, headingHtml);
+
+    // Automatically update the Table of Contents
+    updateTOC();
+    }
+
+  function updateTOC() {
+    const contentDiv = document.getElementById("createContent");
+    const tocDiv = document.getElementById("toc");
+    tocDiv.innerHTML = "<h2>Table of Contents</h2>";
+
+    const headings = contentDiv.querySelectorAll("h1");
+    headings.forEach((heading, index) => {
+      const tocLink = document.createElement("a");
+      tocLink.href = `#${heading.id}`;
+      tocLink.textContent = heading.textContent || `Heading ${index + 1}`;
+      tocDiv.appendChild(tocLink);
+      tocDiv.appendChild(document.createElement("br"));
+    });
+    }
   </script>
 </body>
 </html>
